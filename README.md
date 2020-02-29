@@ -1,2 +1,6 @@
-# companion-module-ShowTimer
-Companion module to control the custom software ShowTimer (not yet released)
+# companion-module-showtimer
+
+Control for ShowTimer (not yet released)
+
+**V1.0.0**
+Initial release
