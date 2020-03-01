@@ -123,19 +123,132 @@ instance.prototype.init_presets = function () {
 instance.prototype.actions = function(system) {
 	var self = this;
 
-	self.system.emit('instance_actions', self.id, {
-		'Start': {label: 'start countdown'},
-		'Pause': { label: 'pause countdown'},
-		'Reset': { label: 'reset countdown'},
+	self.system.emit('instance_actions', self.id, { // change color CRB|CEB|CRT|CET255,255,255
+		'Start': {label: 'start'},
+		'Pause': { label: 'pause'},
+		'Reset': { label: 'reset'},
 		'newCountdown': {
-			label: 'reset countdown with new duration',
+			label: 'new countdown',
 			options: [
 				{
 					type: 'textinput',
+					id: 'id_newCountdownH',
+					label: 'Hours:',
+					default: '0',
+					regex: '/([0-9]+)/'
+				},{
+					type: 'textinput',
 					id: 'id_newCountdownM',
-					label: 'New duration (minutes):',
+					label: 'Minutes:',
 					default: '5',
 					regex: '/([0-9]+)/'
+				},{
+					type: 'textinput',
+					id: 'id_newCountdownS',
+					label: 'Seconds:',
+					default: '0',
+					regex: '/([0-9]+)/'
+				}
+			]
+		},
+		'addTime': {
+			label: 'add time',
+			options: [
+				{
+					type: 'textinput',
+					id: 'id_addH',
+					label: 'Hours:',
+					default: '0',
+					regex: '/-?([0-9]+)/'
+				},{
+					type: 'textinput',
+					id: 'id_addM',
+					label: 'Minutes:',
+					default: '5',
+					regex: '/-?([0-9]+)/'
+				},{
+					type: 'textinput',
+					id: 'id_addS',
+					label: 'Seconds:',
+					default: '0',
+					regex: '/-?([0-9]+)/'
+				}
+			]
+		},
+		'format': {
+			label: 'time format',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_format',
+					label: 'Format:',
+					default: 'MS',
+					choices: [
+						{ id: 'HMS', label: 'hours:minutes:seconds'},
+						{ id: 'MS', label: 'minutes:seconds'},
+						{ id: 'HM', label: 'hours:minutes'},
+						{ id: 'S', label: 'seconds'}
+					]
+				}
+			]
+		},
+		'countUp': {
+			label: 'count up on overtime',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_countUp',
+					label: 'Count up:',
+					default: 'ON',
+					choices: [
+						{ id: 'ON', label: 'On'},
+						{ id: 'OFF', label: 'Off'}
+					]
+				}
+			]
+		},
+		'minus': {
+			label: 'minus on overtime',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_minus',
+					label: 'Show minus sign on overtime:',
+					default: 'ON',
+					choices: [
+						{ id: 'ON', label: 'On'},
+						{ id: 'OFF', label: 'Off'}
+					]
+				}
+			]
+		},
+		'hide': {
+			label: 'hide text',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_hide',
+					label: 'Text visibility:',
+					default: 'ON',
+					choices: [
+						{ id: 'ON', label: 'Visible'},
+						{ id: 'OFF', label: 'Hidden'}
+					]
+				}
+			]
+		},
+		'blink': {
+			label: 'blink on overtime',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_blink',
+					label: 'Blink:',
+					default: 'ON',
+					choices: [
+						{ id: 'ON', label: 'On'},
+						{ id: 'OFF', label: 'Off'}
+					]
 				}
 			]
 		},
@@ -157,11 +270,12 @@ instance.prototype.actions = function(system) {
 instance.prototype.action = function(action) {
 	var self = this;
 	var cmd;
-
+	var opt = action.options;
+	
 	switch(action.action) {
-
+	
 		case 'customCommand':
-			cmd = action.options.id_customCommand;
+			cmd = opt.id_customCommand;
 			break;
 			
 		case 'Start':
@@ -175,9 +289,33 @@ instance.prototype.action = function(action) {
 		case 'Reset':
 			cmd = 'R';
 			break;
+		
+		case 'format':
+			cmd = 'TF_' + opt.id_format;
+			break;
+			
+		case 'countUp':
+			cmd = 'U_' + opt.id_countUp;
+			break;
+		
+		case 'minus':
+			cmd = 'NEG_' + opt.id_minus;
+			break;
+		
+		case 'hide':
+			cmd = 'V_' + opt.id_hide;
+			break;
+		
+		case 'blink':
+			cmd = 'B_' + opt.id_blink;
+			break;
 			
 		case 'newCountdown':
-			cmd = 'N' + action.options.id_newCountdownM + "mP";
+			cmd = 'N' + opt.id_newCountdownH + 'h' + opt.id_newCountdownM + 'm' + opt.id_newCountdownS + "sP";
+			break;
+			
+		case 'addTime':
+			cmd = 'A' + opt.id_addH + 'h' + opt.id_addM + 'm' + opt.id_addS + "s";
 			break;
 
 	}
