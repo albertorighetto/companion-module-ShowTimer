@@ -124,18 +124,31 @@ instance.prototype.actions = function(system) {
 	var self = this;
 
 	self.system.emit('instance_actions', self.id, {
-
-		'send': {
-			label: 'Send Command',
+		'Start': {label: 'start countdown'},
+		'Pause': { label: 'pause countdown'},
+		'Reset': { label: 'reset countdown'},
+		'newCountdown': {
+			label: 'reset countdown with new duration',
 			options: [
 				{
 					type: 'textinput',
-					id: 'id_send',
+					id: 'id_newCountdownM',
+					label: 'New duration (minutes):',
+					default: '5',
+					regex: '/([0-9]+)/'
+				}
+			]
+		},
+		'customCommand': {
+			label: 'send custom command',
+			options: [
+				{
+					type: 'textinput',
+					id: 'id_customCommand',
 					label: 'Command:',
 					default: '',
 					width: 6
 				}
-
 			]
 		}
 	});
@@ -147,8 +160,24 @@ instance.prototype.action = function(action) {
 
 	switch(action.action) {
 
-		case 'send':
-			cmd = action.options.id_send;
+		case 'customCommand':
+			cmd = action.options.id_customCommand;
+			break;
+			
+		case 'Start':
+			cmd = 'S';
+			break;
+		
+		case 'Pause':
+			cmd = 'P';
+			break;
+		
+		case 'Reset':
+			cmd = 'R';
+			break;
+			
+		case 'newCountdown':
+			cmd = 'N' + action.options.id_newCountdownM + "mP";
 			break;
 
 	}
