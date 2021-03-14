@@ -9,30 +9,33 @@ module.exports = {
 	*/
 
 	getActions() {
+		// By default, actions without an option will be sent as a JSON string {"action":true}
+		// By default, actions with options will be sent a JSON string of the options {"optionid1":"value","optionid2":"value"}
+		// This greatly simplifies code management
+
 		var actions = {};
-		
-		
-		actions['Start'] = {label: 'start'},
-		actions['Pause'] = { label: 'pause'},
-		actions['Reset'] = { label: 'reset'},
+
+		actions['start'] = {label: 'Start'},
+		actions['pause'] = {label: 'Pause'},
+		actions['reset'] = {label: 'Reset'},
 		actions['newCountdown'] = {
-			label: 'new countdown',
+			label: 'New countdown',
 			options: [
 				{
 					type: 'textinput',
-					id: 'id_newCountdownH',
+					id: 'hours',
 					label: 'Hours:',
 					default: '0',
 					regex: '/([0-9]+)/'
 				},{
 					type: 'textinput',
-					id: 'id_newCountdownM',
+					id: 'minutes',
 					label: 'Minutes:',
 					default: '5',
 					regex: '/([0-9]+)/'
 				},{
 					type: 'textinput',
-					id: 'id_newCountdownS',
+					id: 'seconds',
 					label: 'Seconds:',
 					default: '0',
 					regex: '/([0-9]+)/'
@@ -40,35 +43,35 @@ module.exports = {
 			]
 		},
 		actions['addTime'] = {
-			label: 'add time',
+			label: 'Add time',
 			options: [
 				{
 					type: 'textinput',
-					id: 'id_addH',
+					id: 'addhours',
 					label: 'Hours:',
 					default: '0',
 					regex: '/-?([0-9]+)/'
 				},{
 					type: 'textinput',
-					id: 'id_addM',
+					id: 'addminutes',
 					label: 'Minutes:',
 					default: '5',
 					regex: '/-?([0-9]+)/'
 				},{
 					type: 'textinput',
-					id: 'id_addS',
+					id: 'addseconds',
 					label: 'Seconds:',
 					default: '0',
 					regex: '/-?([0-9]+)/'
 				}
 			]
 		},
-		actions['format'] = {
-			label: 'time format',
+		actions['timeFormat'] = {
+			label: 'Time format',
 			options: [
 				{
 					type: 'dropdown',
-					id: 'id_format',
+					id: 'timeformat',
 					label: 'Format:',
 					default: 'MS',
 					choices: [
@@ -81,74 +84,28 @@ module.exports = {
 			]
 		},
 		actions['countUp'] = {
-			label: 'count up on overtime',
+			label: 'Count up on overtime',
 			options: [
 				{
 					type: 'dropdown',
-					id: 'id_countUp',
+					id: 'countup',
 					label: 'Count up:',
-					default: 'ON',
+					default: 'on',
 					choices: [
-						{ id: 'ON', label: 'On'},
-						{ id: 'OFF', label: 'Off'}
-					]
-				}
-			]
-		},
-		actions['minus'] = {
-			label: 'minus on overtime',
-			options: [
-				{
-					type: 'dropdown',
-					id: 'id_minus',
-					label: 'Show minus sign on overtime:',
-					default: 'ON',
-					choices: [
-						{ id: 'ON', label: 'On'},
-						{ id: 'OFF', label: 'Off'}
-					]
-				}
-			]
-		},
-		actions['hide'] = {
-			label: 'hide text',
-			options: [
-				{
-					type: 'dropdown',
-					id: 'id_hide',
-					label: 'Text visibility:',
-					default: 'ON',
-					choices: [
-						{ id: 'ON', label: 'Visible'},
-						{ id: 'OFF', label: 'Hidden'}
-					]
-				}
-			]
-		},
-		actions['blink'] = {
-			label: 'blink on overtime',
-			options: [
-				{
-					type: 'dropdown',
-					id: 'id_blink',
-					label: 'Blink:',
-					default: 'ON',
-					choices: [
-						{ id: 'ON', label: 'On'},
-						{ id: 'OFF', label: 'Off'}
+						{ id: 'on', label: 'On'},
+						{ id: 'off', label: 'Off'}
 					]
 				}
 			]
 		},
 		actions['customCommand'] = {
-			label: 'send custom command',
+			label: 'Custom command',
 			options: [
 				{
 					type: 'textinput',
-					id: 'id_customCommand',
+					id: 'command',
 					label: 'Command:',
-					default: '',
-					width: 6
+					default: '{}'
 				}
 			]
 		}
