@@ -22,10 +22,10 @@ module.exports = {
 					bgcolor: this.rgb(0, 204, 0)
 				},
 				actions: [{
-					action: 'Start'
+					action: 'start'
 				}]
 			});
-			
+
 			presets.push({
 				category: 'Control',
 				label: 'Pause',
@@ -37,10 +37,10 @@ module.exports = {
 					bgcolor: this.rgb(255, 255, 0)
 				},
 				actions: [{
-					action: 'Pause'
+					action: 'pause'
 				}]
 			});
-			
+
 			presets.push({
 				category: 'Control',
 				label: 'Reset',
@@ -52,10 +52,10 @@ module.exports = {
 					bgcolor: this.rgb(255, 0, 0)
 				},
 				actions: [{
-					action: 'Reset'
+					action: 'reset'
 				}]
 			});
-			
+
 			presets.push({
 				category: 'Style',
 				label: 'Hide timer',
@@ -80,7 +80,25 @@ module.exports = {
           }
 				}]
 			});
-			
+
+			presets.push({
+				category: 'Style',
+				label: 'Count up at 0',
+				bank: {
+					style: 'text',
+					text: 'Count up at 0',
+					size: 'auto',
+					color: this.rgb(255, 255, 255),
+					bgcolor: this.rgb(0, 0, 0)
+				},
+				actions: [{
+					action: 'countUp',
+					options: {
+						countup: 'on'
+          }
+				}]
+			});
+
 			presets.push({
 				category: 'Style',
 				label: 'Stop at 0',
@@ -89,23 +107,16 @@ module.exports = {
 					text: 'Stop at 0',
 					size: 'auto',
 					color: this.rgb(255, 255, 255),
-					bgcolor: this.rgb(0, 0, 0),
-					latch: true
+					bgcolor: this.rgb(0, 0, 0)
 				},
 				actions: [{
 					action: 'countUp',
 					options: {
-						id_countUp: 'OFF'
-          }
-				}],
-				release_actions: [{
-					action: 'countUp',
-					options: {
-						id_countUp: 'ON'
+						countup: 'off'
           }
 				}]
 			});
-			
+
 			presets.push({
 				category: 'Style',
 				label: 'Blink',
@@ -130,7 +141,7 @@ module.exports = {
           }
 				}]
 			});
-			
+
 			presets.push({
 				category: 'Style',
 				label: 'Hide minus',
@@ -155,7 +166,7 @@ module.exports = {
           }
 				}]
 			});
-			
+
 			presets.push({
 				category: 'Time format',
 				label: 'Format H:MM:SS',
@@ -173,7 +184,7 @@ module.exports = {
           }
 				}]
 			});
-			
+
 			presets.push({
 				category: 'Time format',
 				label: 'Format MM:SS',
@@ -191,7 +202,7 @@ module.exports = {
           }
 				}]
 			});
-			
+
 			presets.push({
 				category: 'Time format',
 				label: 'Format H:MM',
@@ -209,7 +220,7 @@ module.exports = {
           }
 				}]
 			});
-			
+
 			presets.push({
 				category: 'Time format',
 				label: 'Format SS',
