@@ -98,6 +98,21 @@ module.exports = {
 				}
 			]
 		},
+		actions['blink'] = {
+			label: 'Blink on overtime',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'blink',
+					label: 'Blink on overtime:',
+					default: 'on',
+					choices: [
+						{ id: 'on', label: 'On'},
+						{ id: 'off', label: 'Off'}
+					]
+				}
+			]
+		},
 		actions['customCommand'] = {
 			label: 'Custom command',
 			options: [
