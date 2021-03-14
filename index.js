@@ -51,14 +51,13 @@ class instance extends instance_skel {
 	 * @since 1.1.0
 	 */
 	config_fields() {
-		
 		return [
 			{
 				type: 'text',
 				id: 'info',
 				label: 'Information',
 				width: 12,
-				value: 'ShowTimer control'	
+				value: 'ShowTimer control'
 			},
 			{
 				type: 'textinput',
@@ -86,52 +85,24 @@ class instance extends instance_skel {
 	 */
 	action(action) {
 		var id = action.action;
-		var cmd;
 		var opt = action.options;
+		var cmd;
+
+		//console.log(JSON.stringify(action));
 
 		switch (id){
 			case 'customCommand':
-				cmd = opt.id_customCommand;
+				cmd = opt.command;
 				break;
-				
-			case 'Start':
-				cmd = 'S';
-				break;
-			
-			case 'Pause':
-				cmd = 'P';
-				break;
-			
-			case 'Reset':
-				cmd = 'R';
-				break;
-			
-			case 'format':
-				cmd = 'TF_' + opt.id_format;
-				break;
-				
-			case 'countUp':
-				cmd = 'U_' + opt.id_countUp;
-				break;
-			
-			case 'minus':
-				cmd = 'NEG_' + opt.id_minus;
-				break;
-			
-			case 'hide':
-				cmd = 'V_' + opt.id_hide;
-				break;
-			
-			case 'blink':
-				cmd = 'B_' + opt.id_blink;
-				break;
-				
-			case 'newCountdown':
-				cmd = 'N' + opt.id_newCountdownH + 'h' + opt.id_newCountdownM + 'm' + opt.id_newCountdownS + "sP";
-				break;
-				
-			case 'addTime':
-				cmd = 'A' + opt.id_addH + 'h' + opt.id_addM + 'm' + opt.id_addS + "s";
+
+			default:
+				if(Object.keys(opt).length == 0) {
+					// Action has no options, create JSON string with action name and a value
+					cmd = `{"${id}":true}`;
+				} else {
+					// Send options as JSON string
+					cmd = JSON.stringify(opt);
+				}
 				break;
 		}
 
@@ -189,7 +160,7 @@ class instance extends instance_skel {
 			this.socket.destroy();
 			delete this.socket;
 		}
-		
+
 		this.status(this.STATE_WARNING, 'Connecting');
 
 		if (this.config.host) {
@@ -247,7 +218,7 @@ class instance extends instance_skel {
 
 					// Include feedback variables
 					this.initPresets(true);
-					
+
 					info = info.substring(4);
 					info = info.split(',');
 					//this.feedbackstate.;
